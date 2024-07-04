@@ -1,5 +1,8 @@
 package org.acme.rest.json;
 
+import lombok.ToString;
+
+@ToString
 public class Fruit {
 
     public String name;
