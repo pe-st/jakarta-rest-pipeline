@@ -1,0 +1,27 @@
+###
+
+GET http://localhost:8080/fruits
+Accept: application/json
+
+###
+
+POST http://localhost:8080/fruits
+Accept: application/json
+Content-Type: application/json
+
+{ "name": "Pear", "description": "Autumn fruit" }
+
+###
+
+DELETE http://localhost:8080/fruits
+Accept: application/json
+Content-Type: application/json
+
+{ "name": "Apple" }
+
+###
+
+GET http://localhost:8080/legumes
+Accept: application/json
+
+###

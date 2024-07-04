@@ -1,0 +1,26 @@
+# Git bundles
+*.bundle
+
+target/
+tmp/
+
+# binary files
+*.class
+*.jar
+*.war
+*.ear
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# IntelliJ IDEA
+**/.idea/artifacts/
+**/.idea/codeStyles/
+**/.idea/dictionaries/
+**/.idea/httpRequests/
+**/.idea/jarRepositories.xml
+**/.idea/libraries/
+**/.idea/sonarlint.xml
+**/.idea/tasks.xml
+**/.idea/uiDesigner.xml
+**/.idea/workspace.xml
