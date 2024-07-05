@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 import org.apache.commons.io.IOUtils;
-import org.jboss.logging.Logger;
 
 import io.vertx.core.http.HttpServerRequest;
 import jakarta.ws.rs.WebApplicationException;
@@ -24,12 +23,12 @@ import jakarta.ws.rs.ext.ReaderInterceptor;
 import jakarta.ws.rs.ext.ReaderInterceptorContext;
 import jakarta.ws.rs.ext.WriterInterceptor;
 import jakarta.ws.rs.ext.WriterInterceptorContext;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Provider
 public class LoggingFilter implements ContainerRequestFilter,
         ContainerResponseFilter, ReaderInterceptor, WriterInterceptor {
-
-    private static final Logger LOG = Logger.getLogger(LoggingFilter.class);
 
     @Context
     UriInfo info;
@@ -49,7 +48,7 @@ public class LoggingFilter implements ContainerRequestFilter,
         final String clazz = resourceInfo.getResourceClass().getSimpleName();
         final String method = resourceInfo.getResourceMethod().getName();
 
-        LOG.infof("Request Filter: %s %s from IP %s [method %s from %s]", httpMethod, path, address, method, clazz);
+        log.info("Request Filter: {} {} from IP {} [method '{}' from {}]", httpMethod, path, address, method, clazz);
     }
 
     @Override
@@ -57,7 +56,7 @@ public class LoggingFilter implements ContainerRequestFilter,
 
         final String entity = responseContext.getEntity().toString();
 
-        LOG.infof("Response Filter: %s", entity);
+        log.info("Response Filter: {}", entity);
     }
 
     @Override
@@ -67,15 +66,15 @@ public class LoggingFilter implements ContainerRequestFilter,
         try {
             IOUtils.copy(readerContext.getInputStream(), buf);
         } catch (IOException ex) {
-            LOG.infof("Problem while copying the request buffer", ex);
+            log.info("Problem while copying the request buffer", ex);
         }
         String content = buf.toString(UTF_8);
         ByteArrayInputStream bi = new ByteArrayInputStream(buf.toByteArray());
         readerContext.setInputStream(bi);
 
-        LOG.infof("Reader Interceptor before: %s", content);
+        log.info("Reader Interceptor before: {}", content);
         Object entity = readerContext.proceed();
-        LOG.infof("Reader Interceptor after: %s", entity);
+        log.info("Reader Interceptor after: {}", entity);
         return entity;
     }
 
@@ -86,10 +85,10 @@ public class LoggingFilter implements ContainerRequestFilter,
         ByteArrayOutputStream buf = new ByteArrayOutputStream();
         writerContext.setOutputStream(buf);
 
-        LOG.infof("Writer Interceptor before: %s", writerContext.getEntity());
+        log.info("Writer Interceptor before: {}", writerContext.getEntity());
         writerContext.proceed();
         String content = buf.toString(UTF_8);
-        LOG.infof("Writer Interceptor after: %s", content);
+        log.info("Writer Interceptor after: {}", content);
 
         oStream.write(buf.toByteArray());
 

@@ -16,7 +16,6 @@
     <maven.compiler.source>21</maven.compiler.source>
     <maven.compiler.target>21</maven.compiler.target>
     <lombok.version>1.18.34</lombok.version>
-    <commons-io.version>2.16.1</commons-io.version>
   </properties>
 
   <dependencyManagement>
@@ -32,9 +31,18 @@
   </dependencyManagement>
 
   <dependencies>
+    <!-- Managed dependencies -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-rest-jackson</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.jboss.slf4j</groupId>
+      <artifactId>slf4j-jboss-logmanager</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
     </dependency>
 
     <!-- Application dependencies -->
@@ -43,11 +51,6 @@
       <artifactId>lombok</artifactId>
       <version>${lombok.version}</version>
       <scope>provided</scope>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>${commons-io.version}</version>
     </dependency>
 
     <!-- Testing dependencies -->
